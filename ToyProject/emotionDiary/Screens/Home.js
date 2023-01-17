@@ -14,15 +14,18 @@ import { AdMobBanner } from "expo-ads-admob";
 
 const Container = styled.View`
   flex: 1;
+  justify-content: center;
   align-items: center;
   padding: 0px 30px;
   padding-top: 50px;
   background-color: ${colors.bgColor};
 `;
+
 const Title = styled.Text`
   color: ${colors.textColor};
   font-size: 38px;
   font-weight: 500;
+  width: 100%;
 `;
 const Btn = styled.TouchableOpacity`
   position: absolute;
@@ -90,11 +93,11 @@ const Home = ({ navigation: { navigate } }) => {
   return (
     <>
       <AdMobBanner
-        bannerSize="fullBanner"
-        adUnitID="ca-app-pub-3940256099942544/2934735716"
+        bannerSize="smartBannerPortrait"
+        adUnitID="ca-app-pub-3940256099942544/6300978111"
       />
       <Container>
-        <Title>My Journal</Title>
+        <Title>My Emotion</Title>
         <FlatList
           style={{ marginVertical: 25, width: "100%" }}
           data={feelings}

@@ -66,7 +66,7 @@ const Write = ({ navigation: { goBack } }) => {
   const [feelings, setFeelings] = useState("");
   const onChangeText = (text) => setFeelings(text);
   const onEmotionPress = (face) => setEmotion(face);
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (feelings === "" || selectedEmotion == null) {
       return Alert.alert("Please complete form.");
     }
