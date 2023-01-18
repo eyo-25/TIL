@@ -1,16 +1,22 @@
 const fs = require("fs");
-const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
-let input = fs.readFileSync(filePath).toString().trim().split("\n");
+let input = fs.readFileSync("./input.txt").toString().trim().split("\n");
+// let input = fs.readFileSync(0).toString().trim().split("\n");
+// 런타임 오류로 파일에 0 넣어야됨
 
-solution(input);
+const length = +input[0];
 
-function solution(input) {
-  const array = input[1].split(" ").map((item) => +item);
-  const max = Math.max(...array);
-
-  let result = array.reduce((acc, cur) => {
-    return (acc += (cur / max) * 100);
+let add = 0;
+for (let i = 1; i < length + 1; i++) {
+  const array = input[i].trim().split("");
+  const result = array.reduce((acc, cur) => {
+    if (cur === "O") {
+      add += 1;
+      return acc + add;
+    } else {
+      add = 0;
+      return acc;
+    }
   }, 0);
-
-  console.log(result / array.length);
+  add = 0;
+  console.log(result);
 }
