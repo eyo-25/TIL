@@ -1,23 +1,30 @@
 const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
-let input = fs.readFileSync(filePath).toString().split("\n");
+let input = fs.readFileSync(filePath).toString().trim().split("\n");
 
-input = input[0];
-input = +input;
 solution(input);
 
-function solution(n) {
-  let starResult = "";
-  for (let index = 1; index < n + 1; index++) {
-    let sum = "";
-    for (let i = 1; i < n + 1; i++) {
-      if (i < n + 1 - index) {
-        sum = sum + " ";
-      } else {
-        sum = sum + "*";
+function solution(input) {
+  let count = +input.shift();
+  let wordArray = input.map((item) => item.split("\r").join(""));
+
+  wordArray.map((word) => {
+    let findArray = word.split("");
+    let letterArray = [...new Set(word.split(""))];
+    let isGroup = true;
+    for (let i = 0; i < letterArray.length; i++) {
+      const letterLeng = findArray.filter((e) => e === letterArray[i]).length;
+      if (1 < letterLeng) {
+        const repeatLeng = letterArray[i].repeat(letterLeng);
+        if (!word.includes(repeatLeng)) {
+          isGroup = false;
+          break;
+        }
       }
     }
-    starResult = `${starResult && starResult + "\n"}` + sum;
-  }
-  console.log(starResult);
+    if (!isGroup) {
+      count -= 1;
+    }
+  });
+  console.log(count);
 }
