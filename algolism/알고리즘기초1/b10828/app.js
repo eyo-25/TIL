@@ -1,39 +1,24 @@
 const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
-let input = fs.readFileSync(filePath).toString().split("\n");
-
-input = input;
+let input = fs.readFileSync(filePath).toString().trim().split("\n");
+input = input.map((item) => item.replace(/\r/g, ""));
+input.shift();
 
 let stack = [];
-let result = [];
 
-for (let i = 1; i <= +input[0]; i++) {
-  const array = input[i].trim().split(" ");
-  if (array[0] === "push") {
-    const num = +array[1];
-    stack.push(num);
-  }
-  if (array[0] === "top") {
-    result.push(stack.length <= 0 ? -1 : stack[stack.length - 1]);
-  }
-  if (array[0] === "size") {
-    result.push(stack.length);
-  }
-  if (array[0] === "pop") {
-    if (stack.length <= 0) {
-      result.push(-1);
-    } else {
-      const x = stack.pop();
-      result.push(x);
-    }
-  }
-  if (array[0] === "empty") {
-    if (stack.length <= 0) {
-      result.push(1);
-    } else {
-      result.push(0);
-    }
-  }
-}
+const fn = {
+  push: (cu) => {
+    stack.push(cu.split(" ")[1]);
+    return "";
+  },
+  pop: () => stack.pop() || -1,
+  top: () => stack[stack.length - 1] || -1,
+  size: () => stack.length,
+  empty: () => (stack[0] ? 0 : 1),
+};
 
-console.log(result.join("\n"));
+const result = input.reduce((acc, cu) => {
+  return acc + (fn[cu] ? `${fn[cu]()}\n` : fn.push(cu));
+}, "");
+
+console.log(result.trim());
