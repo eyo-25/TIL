@@ -59,3 +59,77 @@ function 내함수(x :number | string){
 	array[0] = x as number;
 }
 ```
+
+### **Narrowing으로 HTML 변경과 조작시 주의할 점**
+
+innerHTML로 조작시 제목의 타입이 ELEMENT | NULL이 되기때문에 에러가 뜬다.
+
+(쿼리셀렉터로 설정한게 잘못설정했을 경우 null이 되기때문)
+
+```tsx
+let 제목 = document.querySelector("#title");
+
+제목.innerHTML = "반가워요"; //에러
+
+```
+
+ 이를 해결하기 위해서는 제목의 타입을 결정하거나 nerrowing을 통해 타입을 정해준다.
+
+(사실 자바스크립트로 짤떄도 쿼리가 선택했는지 체크하고 짤 수 있어 depensive하다)
+
+```tsx
+let 제목 = document.querySelector("#title");
+
+if (제목 !== null) {
+  제목.innerHTML = "반가워요";
+}
+```
+
+nerrowing할때 instanceof 쓰는게 위의 경우보다 좋다.
+
+```tsx
+let 제목 = document.querySelector("#title");
+
+if (제목 instanceof Element) {
+  제목.innerHTML = "반가워요";
+}
+```
+
+optional chaning으로 ? 왼쪽 오브젝트자료에 innerHTML있으면 쓰고 없으면 undefined 남기는 걸로
+
+쿼리셀렉터를 잘선택했는지 체크해서 작업한다.
+
+```tsx
+let 제목 = document.querySelector('#title');
+if (제목?.innerHTML != undefined) {
+  제목.innerHTML = '반갑소'
+}
+```
+
+아래의 HTMLAnchorElement는 <a>태그의  타입인데 이처럼 html요소의 타입에 맞게 쓰자
+
+```tsx
+let 링크 = document.querySelector("#link");
+
+if (링크 instanceof HTMLAnchorElement) {
+  링크.href = "http://kakao.com";
+}
+```
+
+eventlistener의 경우 아래처럼 optionnalchainning가능
+
+```tsx
+let 버튼 = document.querySelector("#button");
+버튼?.addEventListener("click", ()=>{})
+```
+
+아래의 querySelectorAll을 사용하면 타입이 NodeListOf로 나오기 떄문에 foreach로 각각 변경
+
+```tsx
+let 링크 = document.querySelectorAll(".naver");
+링크.forEach((a) => {
+  if (a instanceof HTMLAnchorElement) {
+    a.href = "https://kakao.com";
+  }
+});
+```
