@@ -6,9 +6,9 @@ let [N, arr, M, findNums] = input.map((el) => el.trim().split(" ").map(Number));
 
 const answer = [];
 arr = arr.sort((a, b) => a - b);
-findNums.forEach((findNum) => answer.push(binarySerach(arr, findNum)));
+findNums.forEach((findNum) => answer.push(binarySearch(arr, findNum)));
 
-function binarySerach(array, findValue) {
+function binarySearch(array, findValue) {
   let left = 0;
   let right = array.length - 1;
   let mid = Math.floor((left + right) / 2);
