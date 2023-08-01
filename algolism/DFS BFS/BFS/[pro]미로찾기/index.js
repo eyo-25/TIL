@@ -26,6 +26,8 @@ function BFS(matrix, start, end) {
 
   const routes = Array.from(Array(rows), () => Array(cols).fill(Infinity));
 
+  console.log(routes);
+
   const queue = [start];
   routes[start[0]][start[1]] = 0;
 

@@ -16,13 +16,8 @@ function solution(maps) {
   }
 
   function DFS(row, col, cnt) {
-    if (row > rowLength || col > colLength || row < 0 || col < 0) {
-      return cnt;
-    }
-
-    if (graph[row][col] === "X") {
-      return cnt;
-    }
+    if (row > rowLength || col > colLength || row < 0 || col < 0) return cnt;
+    if (graph[row][col] === "X") return cnt;
 
     cnt += Number(graph[row][col]);
     graph[row][col] = "X";
