@@ -44,5 +44,3 @@ function solution(s) {
   // console.log(result);
   return result;
 }
-
-solution("}}}");
